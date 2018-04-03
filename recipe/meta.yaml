@@ -42,12 +42,15 @@ test:
 
 about:
   home: https://github.com/rkern/line_profiler
-  license: BSD 3-Clause
-  license_family: BSD
+  license: BSD
   license_file: LICENSE.txt
-  summary: A module for monitoring memory usage of a python program
+  summary: Line-by-line profiling for Python
+  description: |
+    line_profiler will profile the time individual lines of code take to execute.
+    The profiler is implemented in C via Cython in order to reduce the overhead of profiling.
+  doc_url: https://pypi.python.org/pypi/line_profiler
+  doc_source_url: https://github.com/rkern/line_profiler
   dev_url: https://github.com/rkern/line_profiler
-  doc_url: https://github.com/rkern/line_profiler
 
 extra:
   recipe-maintainers:
