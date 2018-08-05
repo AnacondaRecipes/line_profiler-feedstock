@@ -17,7 +17,7 @@ build:
     # So Cython regenerates it:
     - rm -rf _line_profiler.c  # [unix]
     - del /s /q _line_profiler.c  # [win]
-    - ${PYTHON} setup.py install --single-version-externally-managed --record=record.txt
+    - {{ PYTHON }} setup.py install --single-version-externally-managed --record=record.txt
   entry_points:
     - kernprof=kernprof:main
 
