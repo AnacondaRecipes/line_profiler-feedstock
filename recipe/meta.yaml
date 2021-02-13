@@ -29,6 +29,7 @@ requirements:
     - python
     - setuptools
     - cython
+    - scikit-build
 
   run:
     - python
