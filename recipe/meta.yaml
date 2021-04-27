@@ -23,19 +23,20 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
-    - python
-    - cyhton
-
+    - python                                 # [build_platform != target_platform]
+    - cython                                 # [build_platform != target_platform]
+    - {{ compiler("cxx") }}
+    - cmake
+    - ninja
   host:
     - python
-    - setuptools
+    - pip
     - cython
     - scikit-build
-
   run:
     - python
     - ipython >=0.13
+
 
 test:
   imports:
