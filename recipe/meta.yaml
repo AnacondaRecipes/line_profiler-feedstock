@@ -24,13 +24,11 @@ requirements:
   build:
     - {{ compiler('c') }}
     - cmake
-
   host:
     - python
     - setuptools
     - scikit-build
     - cython
-
   run:
     - python
     - ipython >=0.13
