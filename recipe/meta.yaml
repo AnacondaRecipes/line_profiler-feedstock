@@ -1,6 +1,5 @@
 {% set name = "line_profiler" %}
-{% set version = "2.1.2" %}
-{% set checksum = "efa66e9e3045aa7cb1dd4bf0106e07dec9f80bc781a993fbaf8162a36c20af5c" %}
+{% set version = "3.3.1" %}
 
 package:
   name: {{ name }}
@@ -9,7 +8,7 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: {{ checksum }}
+  sha256: 6e2fb792ca022f900f374f9659fd3e7c530cd4df7d3b7e84be889093b487639f
 
 build:
   number: 0
@@ -17,19 +16,22 @@ build:
     # So Cython regenerates it:
     - rm -rf _line_profiler.c  # [unix]
     - del /s /q _line_profiler.c  # [win]
-    - {{ PYTHON }} setup.py install --single-version-externally-managed --record=record.txt
+    - {{ PYTHON }} setup.py install --old-and-unmanageable
   entry_points:
     - kernprof=kernprof:main
+  # package is required on linux-s390x
+  skip: True  [s390x]
 
 requirements:
   build:
-    - {{ compiler('c') }}
-
+    - {{ compiler('cxx') }}
+    - cmake
+    - make      # [unix]
   host:
     - python
     - setuptools
     - cython
-
+    - scikit-build
   run:
     - python
     - ipython >=0.13
@@ -38,7 +40,6 @@ test:
   imports:
     - kernprof
     - line_profiler
-    - line_profiler_py35  # [py>34]
 
   commands:
     - kernprof --help
