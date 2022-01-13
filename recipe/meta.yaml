@@ -26,11 +26,12 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - cmake
+    - make
   host:
     - python
     - setuptools
-    - scikit-build
     - cython
+    - scikit-build
   run:
     - python
     - ipython >=0.13
