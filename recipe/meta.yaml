@@ -1,5 +1,5 @@
 {% set name = "line_profiler" %}
-{% set version = "3.3.1" %}
+{% set version = "4.0.3" %}
 
 package:
   name: {{ name }}
@@ -8,7 +8,7 @@ package:
 source:
   fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 6e2fb792ca022f900f374f9659fd3e7c530cd4df7d3b7e84be889093b487639f
+  sha256: deb2eb9e9119d911debe23edcec8ea68a2cd70c9e3f753c96aaf4a86ca497e7e
 
 build:
   number: 0
