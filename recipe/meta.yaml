@@ -13,50 +13,55 @@ source:
 build:
   number: 0
   script:
-    # So Cython regenerates it:
-    - rm -rf _line_profiler.c  # [unix]
-    - del /s /q _line_profiler.c  # [win]
-    - {{ PYTHON }} setup.py install --old-and-unmanageable
+    # We can't use CMAKE_GENERATOR implicitly via conda_build_config.yaml, yet,
+    # due to https://github.com/AnacondaRecipes/aggregate/pull/182
+    - set "CMAKE_GENERATOR={{ CMAKE_GENERATOR }}"  # [win]
+    - export CMAKE_GENERATOR=Ninja  # [not (win or (osx and arm64))]
+    - export CMAKE_OSX_ARCHITECTURES="arm64"  # [osx and arm64]
+    - {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
-    - kernprof=kernprof:main
-  # package is required on linux-s390x
-  skip: True  [s390x]
+    - kernprof = kernprof:main
 
 requirements:
   build:
     - {{ compiler('cxx') }}
     - cmake
-    - make      # [unix]
+    - ninja
   host:
     - python
+    - pip
+    - cython 0.29.33
+    - scikit-build 0.15.0
     - setuptools
-    - cython
-    - scikit-build
+    - wheel
   run:
     - python
     - ipython >=0.13
+    - __osx >={{ MACOSX_DEPLOYMENT_TARGET|default("10.9") }}  # [osx and x86_64]
 
 test:
   imports:
     - kernprof
     - line_profiler
-
+  requires:
+    - pip
   commands:
+    - pip check
     - kernprof --help
     - python -m kernprof --help
-    - python -m line_profiler --help
 
 about:
-  home: https://github.com/rkern/line_profiler
-  license: BSD
+  home: https://github.com/pyutils/line_profiler
+  # line_profiler/timers.c falls under the PSF license
+  license: BSD-3-Clause AND PSF-2.0
+  license_family: BSD
   license_file: LICENSE.txt
   summary: Line-by-line profiling for Python
   description: |
     line_profiler will profile the time individual lines of code take to execute.
     The profiler is implemented in C via Cython in order to reduce the overhead of profiling.
-  doc_url: https://pypi.python.org/pypi/line_profiler
-  doc_source_url: https://github.com/rkern/line_profiler
-  dev_url: https://github.com/rkern/line_profiler
+  doc_url: https://github.com/pyutils/line_profiler
+  dev_url: https://github.com/pyutils/line_profiler
 
 extra:
   recipe-maintainers:
