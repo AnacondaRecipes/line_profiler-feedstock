@@ -12,6 +12,7 @@ source:
 
 build:
   number: 0
+  skip: true  # [py<36]
   script:
     # We can't use CMAKE_GENERATOR implicitly via conda_build_config.yaml, yet,
     # due to https://github.com/AnacondaRecipes/aggregate/pull/182
@@ -36,6 +37,8 @@ requirements:
     - wheel
   run:
     - python
+    - ipython >=0.13
+  run_constrained:
     - ipython >=0.13
 
 test:
