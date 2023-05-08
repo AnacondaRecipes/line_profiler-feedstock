@@ -38,8 +38,6 @@ requirements:
   run:
     - python
     - ipython >=0.13
-  run_constrained:
-    - ipython >=0.13
 
 test:
   imports:
