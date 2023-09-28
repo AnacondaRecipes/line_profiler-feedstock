@@ -11,7 +11,7 @@ source:
   sha256: deb2eb9e9119d911debe23edcec8ea68a2cd70c9e3f753c96aaf4a86ca497e7e
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<36]
   script:
     # We can't use CMAKE_GENERATOR implicitly via conda_build_config.yaml, yet,
@@ -31,7 +31,7 @@ requirements:
   host:
     - python
     - pip
-    - cython 0.29.33
+    - cython 0.29
     - scikit-build 0.15.0
     - setuptools
     - wheel
