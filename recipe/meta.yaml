@@ -35,15 +35,20 @@ requirements:
     - ipython >=7.14.0  # [py==36]
 
 test:
+  source_files:
+    - tests
   imports:
     - kernprof
     - line_profiler
   requires:
     - pip
+    - pytest
   commands:
     - pip check
     - kernprof --help
     - python -m kernprof --help
+    # Ignored tests require ubelt
+    - pytest --ignore=tests/test_autoprofile.py --ignore=tests/test_complex_case.py --ignore=tests/test_explicit_profile.py --ignore=tests/test_cli.py
 
 about:
   home: https://github.com/pyutils/line_profiler
