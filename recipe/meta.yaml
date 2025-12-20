@@ -1,5 +1,5 @@
 {% set name = "line_profiler" %}
-{% set version = "4.2.0" %}
+{% set version = "5.0.0" %}
 
 package:
   name: {{ name }}
@@ -7,8 +7,8 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: 09e10f25f876514380b3faee6de93fb0c228abba85820ba1a591ddb3eb451a96
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: a80f0afb05ba0d275d9dddc5ff97eab637471167ff3e66dcc7d135755059398c
 
 build:
   number: 0
@@ -20,19 +20,26 @@ build:
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - {{ compiler('c') }}
   host:
     - python
     - pip
     - cython >=3.0.3
-    - setuptools >=68.2.2
-    - wheel
+    - setuptools >=68.2.2  # [py<40 and py>=38]
+    - ninja
   run:
     - python
+    - tomli  # [py<311]
   run_constrained:
     - ipython >=8.14.0  # [py>=39]
     - ipython >=8.12.2  # [py==38]
     - ipython >=7.18.0  # [py==37]
     - ipython >=7.14.0  # [py==36]
+    - rich ==12.3.0
+    - Cython ==3.0.3
+    - scikit-build ==0.11.1
+    - cmake ==3.21.2
+    - ninja ==1.10.2
 
 test:
   source_files:
