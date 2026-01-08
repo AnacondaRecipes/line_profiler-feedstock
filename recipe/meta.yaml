@@ -6,7 +6,6 @@ package:
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.tar.gz
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   sha256: a80f0afb05ba0d275d9dddc5ff97eab637471167ff3e66dcc7d135755059398c
 
@@ -41,6 +40,14 @@ requirements:
     - cmake ==3.21.2
     - ninja ==1.10.2
 
+# Ignored tests require ubelt
+{% set ignored_test = [
+  "--ignore=tests/test_kernprof.py",
+  "--ignore=tests/test_autoprofile.py",
+  "--ignore=tests/test_complex_case.py",
+  "--ignore=tests/test_explicit_profile.py",
+  "--ignore=tests/test_cli.py"
+]%}
 test:
   source_files:
     - tests
@@ -54,8 +61,7 @@ test:
     - pip check
     - kernprof --help
     - python -m kernprof --help
-    # Ignored tests require ubelt
-    - pytest --ignore=tests/test_autoprofile.py --ignore=tests/test_complex_case.py --ignore=tests/test_explicit_profile.py --ignore=tests/test_cli.py
+    - pytest {{ ignored_test | join(" ")}}
 
 about:
   home: https://github.com/pyutils/line_profiler
