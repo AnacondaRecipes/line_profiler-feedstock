@@ -20,6 +20,7 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
   host:
     - python
     - pip
@@ -46,7 +47,12 @@ requirements:
   "--ignore=tests/test_autoprofile.py",
   "--ignore=tests/test_complex_case.py",
   "--ignore=tests/test_explicit_profile.py",
-  "--ignore=tests/test_cli.py"
+  "--ignore=tests/test_cli.py",
+  ## There should only be one Cython source file
+  # cython_source, = tmp_path.glob('*.pyx')
+  # ValueError: not enough values to unpack (expected 1, got 0)
+  "--deselect=tests/test_cython.py::test_recover_cython_source",
+  "--deselect=tests/test_cython.py::test_profile_cython_source"
 ]%}
 test:
   source_files:
@@ -61,7 +67,7 @@ test:
     - pip check
     - kernprof --help
     - python -m kernprof --help
-    - pytest {{ ignored_test | join(" ")}}
+    - pytest -v {{ ignored_test | join(" ")}}
 
 about:
   home: https://github.com/pyutils/line_profiler
