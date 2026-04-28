@@ -25,6 +25,7 @@ requirements:
     - python
     - pip
     - cython >=3.0.3
+    - wheel
     - setuptools >=68.2.2  # [py>=38]
     - ninja-base >=1.10.2
     - scikit-build >=0.11.1
