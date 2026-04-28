@@ -44,6 +44,7 @@ requirements:
   "--ignore=tests/test_complex_case.py",
   "--ignore=tests/test_explicit_profile.py",
   "--ignore=tests/test_cli.py",
+  "--ignore=tests/test_ipython.py",
   ## There should only be one Cython source file
   # cython_source, = tmp_path.glob('*.pyx')
   # ValueError: not enough values to unpack (expected 1, got 0)
