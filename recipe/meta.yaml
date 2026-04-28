@@ -1,5 +1,5 @@
 {% set name = "line_profiler" %}
-{% set version = "5.0.0" %}
+{% set version = "5.0.2" %}
 
 package:
   name: {{ name }}
@@ -7,14 +7,14 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
-  sha256: a80f0afb05ba0d275d9dddc5ff97eab637471167ff3e66dcc7d135755059398c
+  sha256: 8d8a990c84c64bcde45af22af502d17bc0ae107be405ce41bba92af5c39c0000
 
 build:
   number: 0
-  skip: true  # [py<38]
   script: {{ PYTHON }} -m pip install . --no-deps --no-build-isolation -vv
   entry_points:
     - kernprof = kernprof:main
+  skip: true  # [py<38 or py>314]
 
 requirements:
   build:
@@ -27,16 +27,15 @@ requirements:
     - cython >=3.0.3
     - setuptools >=68.2.2  # [py>=38]
     - ninja-base >=1.10.2
+    - scikit-build >=0.11.1
   run:
     - python
     - tomli  # [py<311]
   run_constrained:
-    - ipython >=8.14.0  # [py>=39]
     - ipython >=8.12.2  # [py==38]
-    - ipython >=7.18.0  # [py==37]
-    - ipython >=7.14.0  # [py==36]
+    - ipython >=8.14.0  # [py>=39]
     - rich >=12.3.0
-    - Cython >=3.0.3
+    - cython >=3.0.3
 
 # Ignored tests require ubelt
 {% set ignored_test = [
@@ -76,7 +75,7 @@ about:
   description: |
     line_profiler will profile the time individual lines of code take to execute.
     The profiler is implemented in C via Cython in order to reduce the overhead of profiling.
-  doc_url: https://github.com/pyutils/line_profiler
+  doc_url: https://kernprof.readthedocs.io
   dev_url: https://github.com/pyutils/line_profiler
 
 extra:
