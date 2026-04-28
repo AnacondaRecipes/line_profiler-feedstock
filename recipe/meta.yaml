@@ -31,6 +31,7 @@ requirements:
   run:
     - python
     - tomli  # [py<311]
+    - typing_extensions
   run_constrained:
     - ipython >=8.12.2  # [py==38]
     - ipython >=8.14.0  # [py>=39]
